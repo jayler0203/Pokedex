@@ -32,6 +32,10 @@ const getPokemon = async (id) => {
   console.log();
   createPokemonCard(data);
 };
+function agregarCeros(numero, longitud) {
+	return String(numero).padStart(longitud, '0');
+  }
+  
 const createPokemonCard = (pokemon) => {
   let nombre = pokemon.name;
   let tipo = pokemon.types[0].type.name;
@@ -43,7 +47,7 @@ const createPokemonCard = (pokemon) => {
 	  <img src="${linkImagen}" alt="Bulbasaur">
 	</div>
 	<div class="info">
-	  <span class="number">001</span>
+	  <span class="number">#${agregarCeros(pokemon.id,3)}</span>
 	  <h3 class="name">${nombre}</h3>
 	  <small class="type">Type: <span>${tipo}</span></small>
 	</div>
@@ -52,5 +56,13 @@ const createPokemonCard = (pokemon) => {
   poke_card.innerHTML = card;
   poke_container.appendChild(poke_card);
 };
+
+const getPokemonNombre = async (id) => {
+	const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
+	const res = await fetch(url);
+	const data = await res.json();
+	console.log();
+	createPokemonCard(data);
+  };
 
 fetchPokemons();
