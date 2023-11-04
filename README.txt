@@ -1,35 +1,65 @@
-Instrucciones de Implementación
+## Pasos para la realizacion de las pokemon cards:
+1. #### Investigación de la API Pokémon:
+   Leí la documentación de la API para poder saber qué atributos se obtienen de cada Pokémon y dónde están ubicados los que necesito.
+2. #### Creación del Template de la Tarjeta:
+   Copié la card de ejemplo en una variable de JS para convertirla en un template string.
+   ```javascript
+   const card = `<div class="pokemon" style="background-color: rgb(222,253,224);">
+        <div class="img-container">
+          <img src="https://pokeres.bastionbot.org/images/pokemon/1.png" alt="Bulbasaur">
+        </div>
+        <div class="info">
+          <span class="number">001</span>
+          <h3 class="name">Bulbasaur</h3>
+          <small class="type">Type: <span>grass</span></small>
+        </div>
+      </div>`
 
-Bienvenidos al reto 19, para cumplirlo deberán seguir lo siguiente:
+   ```
+3. #### Integración en la Página Web:
+   Luego creé un div para colocar todo el contenido de la card y agregarlo al poke_container del HTML.
+   ```javascript
+   const poke_card = document.createElement("div");
+   poke_card.innerHTML = card;
+   poke_container.appendChild(poke_card);
+   ```
 
-1. Ver el video de explicación de reto.
-
-2. Tienen los siguientes recursos: HTML y parte del css 
+4. ### Personalización de la Tarjeta Pokémon:
+   Después cambié los valores estáticos por las propiedades equivalentes del parámetro de Pokémon.
+   ```javascript
+   const card = `<div class="pokemon" style="background-color:${colors[pokemon.types[0].type.name]} ;">
+	  <div class="img-container">
+	  <img src="${pokemon.sprites.other["official-artwork"]["front_default"]}" alt="Bulbasaur">
+	  </div>
+	  <div class="info">
+	  <span class="number">#${agregarCeros(pokemon.id,3)}</span>
+	  <h3 class="name">${pokemon.name}</h3>
+	  <small class="type">Type: <span>${pokemon.types[0].type.name}</span></small>
+  	</div>
+    </div>`
    
-   * Acá les damos una estructura y una guía de cómo deben hacerlo sientanse libres de cambiar el código en donde necesiten para llegar al resultado final.
 
-3. Resultado: El reto debe ser igual al que visualizan en el video.
+  
+   ```
+   Para los números del Pokémon, creé una función que llena de ceros el string hasta tener una longitud deseada.
+   ```javascript
+   function agregarCeros(numero, longitud) {
+	return String(numero).padStart(longitud, '0');
+   }
+   ```
+   Y para los colores, accedí al objeto de colores según el tipo:  ``` colors[pokemon.types[0].type.name] ```
+ 
+5. #### Definición de Variables Descriptivas:
+   Finalmente, creé unas variables para cada atributo para que sea más fácil leer el template string.
+   ```javascript
+   let nombre = pokemon.name;
+   let tipo = pokemon.types[0].type.name;
+   let color = colors[tipo];
+   let linkImagen = pokemon.sprites.other["official-artwork"]["front_default"];
+   ```
 
-¡HINTS!
-
-CSS
-
--  El CSS está completo pero deben practicar y entender cómo se crearon las cards en este reto
 
 
-JS
-
-la API que se usará es:
-
-pokeapi.co
-
-Deberás crear createPokemonCard: se encargará de
-
-Traer el nombre del pokemon
-el id
-el tipo de pokemon, este será útil para hacer match con el fondo que debe tener cada pokemon
-
-con esta información podrás construir la card de cada uno de ellos.
 
 
 
